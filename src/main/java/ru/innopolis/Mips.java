@@ -1,9 +1,6 @@
 package ru.innopolis;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Mips<K, V> implements Map<K, V> {
 
@@ -179,17 +176,42 @@ public class Mips<K, V> implements Map<K, V> {
 
     @Override
     public Set keySet() {
-        return null;
+        HashSet<K> resultSet = new HashSet<K>();
+        Uzel uzel;
+        for (int i = 0; i < kase.length; i++) {
+            uzel = kase[i];
+            if (uzel != null) {
+                do {
+                    resultSet.add((K) uzel.getKey());
+                    uzel = uzel.getNext();
+                } while (uzel != null);
+            }
+        }
+
+        return resultSet;
     }
 
     @Override
     public Collection values() {
-        return null;
+        List<V> resultValues = new ArrayList<>();
+        Uzel uzel;
+        for (int i = 0; i < kase.length; i++) {
+            uzel = kase[i];
+            if (uzel != null) {
+                do {
+                    resultValues.add((V)uzel.getValue());
+                    uzel = uzel.getNext();
+                } while (uzel != null);
+            }
+        }
+
+        return resultValues;
     }
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return null;
+        Set<Entry<K, V>> resultSet = new HashSet<>();
+        return resultSet;
     }
 
     /**

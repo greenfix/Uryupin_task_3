@@ -1,9 +1,12 @@
 package ru.innopolis;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.CollectionUtils;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -118,16 +121,51 @@ class MipsTest {
 
     @Test
     void keySet() {
-
+        assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
+        assertEquals(map.put(0, null), mips.put(0, null));
+        assertEquals(map.put(1, "-1"), mips.put(1, "-1"));
+        assertEquals(map.put(2, "-2"), mips.put(2, "-2"));
+        assertEquals(map.put(3, "-3"), mips.put(3, "-3"));
+        assertEquals(map.put(4, "-4"), mips.put(4, "-4"));
+        assertEquals(map.size(), mips.size());
+        Set<Integer> mapKeys = map.keySet();
+        Set<Integer> mipsKeys = map.keySet();
+        mapKeys.removeAll(mipsKeys);
+        mipsKeys.removeAll(mapKeys);
+        assertTrue(mapKeys.isEmpty());
+        assertTrue(mipsKeys.isEmpty());
     }
 
     @Test
-    void Collection() {
-
+    void values() {
+        assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
+        assertEquals(map.put(0, null), mips.put(0, null));
+        assertEquals(map.put(1, "-1"), mips.put(1, "-1"));
+        assertEquals(map.put(2, "-2"), mips.put(2, "-2"));
+        assertEquals(map.put(3, "-3"), mips.put(3, "-3"));
+        assertEquals(map.put(4, "-4"), mips.put(4, "-4"));
+        assertEquals(map.size(), mips.size());
+        Collection mapColl = map.values();
+        Collection mipsColl = mips.values();
+        int beginSize = mipsColl.size();
+        assertEquals(mapColl.size(), mipsColl.size());
+        mapColl.retainAll(mipsColl);
+        mipsColl.retainAll(mapColl);
+        assertEquals(beginSize, mapColl.size());
+        assertEquals(beginSize, mipsColl.size());
     }
 
     @Test
-    void Set() {
+    void entrySet() {
+        assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
+        assertEquals(map.put(0, null), mips.put(0, null));
+        assertEquals(map.put(1, "-1"), mips.put(1, "-1"));
+        assertEquals(map.put(2, "-2"), mips.put(2, "-2"));
+        assertEquals(map.put(3, "-3"), mips.put(3, "-3"));
+        assertEquals(map.put(4, "-4"), mips.put(4, "-4"));
+        assertEquals(map.size(), mips.size());
+
+        System.out.println(map.entrySet());
 
     }
 }
