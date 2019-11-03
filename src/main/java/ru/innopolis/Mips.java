@@ -1,19 +1,20 @@
 package ru.innopolis;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 public class Mips<K, V> implements Map<K, V> {
 
-    private static final float FACTOR = 2.0f;
     private static final int CAPACITY = 16;
     private static final float LOAD_FACTOR = 0.75f;
+    private static final float FACTOR = 2.0f;
 
     private float loadFactor;
     private int capacity;
     private int size = 0;
-    private Uzel[] kase;
+    public Uzel[] kase;
 
     /**
      *
@@ -54,7 +55,22 @@ public class Mips<K, V> implements Map<K, V> {
 
     @Override
     public V get(Object K) {
-        return null;
+        Uzel uzel = kase[getIndexBasket(K)];
+        if (uzel == null) {
+
+            return null;
+        }
+        while (true) {
+            if (isNeedUzel(K, uzel)) {
+                break;
+            }
+            uzel = uzel.getNext();
+            if (uzel == null) {
+                return null;
+            }
+        }
+
+        return (V) uzel.getValue();
     }
 
     @Override
@@ -124,20 +140,41 @@ public class Mips<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsValue(Object value) {
+        Uzel uzel;
+        Object uzelValue;
+        for (int i = 0; i < kase.length; i++) {
+            uzel = kase[i];
+            if (uzel != null) {
+                do {
+                    uzelValue = uzel.getValue();
+                    if ((uzelValue == null && value == null) ||
+                            (uzelValue != null && uzelValue.equals(value)) ||
+                            (value != null && value.equals(uzelValue))) {
+                        return true;
+                    }
+                    uzel = uzel.getNext();
+                } while (uzel != null);
+            }
+        }
 
         return false;
     }
 
     @Override
     public void putAll(Map m) {
-
+        Iterator<Entry<Integer, String>> it = m.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, String> pair = it.next();
+            put((K) pair.getKey(), (V) pair.getValue());
+        }
     }
 
     @Override
     public void clear() {
-//        capacity = CAPACITY;
-//        loadFactor = LOAD_FACTOR;
-//        kase = new Uzel[capacity];
+        capacity = CAPACITY;
+        loadFactor = LOAD_FACTOR;
+        size = 0;
+        kase = new Uzel[capacity];
     }
 
     @Override
