@@ -1,4 +1,4 @@
-package ru.innopolis;
+package ru.uryupin.customhashmap;
 
 public class Uzel<K, V> {
 

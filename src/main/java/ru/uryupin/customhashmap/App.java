@@ -1,4 +1,4 @@
-package ru.innopolis;
+package ru.uryupin.customhashmap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,5 +8,6 @@ import java.util.Map;
  */
 public class App {
     public static void main(String[] args) {
+
     }
 }

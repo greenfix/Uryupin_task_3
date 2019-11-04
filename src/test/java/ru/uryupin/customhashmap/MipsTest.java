@@ -1,7 +1,6 @@
-package ru.innopolis;
+package ru.uryupin.customhashmap;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.HashMap;
