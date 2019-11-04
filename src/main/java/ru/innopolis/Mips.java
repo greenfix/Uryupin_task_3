@@ -199,7 +199,7 @@ public class Mips<K, V> implements Map<K, V> {
             uzel = kase[i];
             if (uzel != null) {
                 do {
-                    resultValues.add((V)uzel.getValue());
+                    resultValues.add((V) uzel.getValue());
                     uzel = uzel.getNext();
                 } while (uzel != null);
             }
@@ -211,7 +211,38 @@ public class Mips<K, V> implements Map<K, V> {
     @Override
     public Set<Entry<K, V>> entrySet() {
         Set<Entry<K, V>> resultSet = new HashSet<>();
+        Entry<K, V> entry;
+        Uzel uzel;
+        for (int i = 0; i < kase.length; i++) {
+            uzel = kase[i];
+            if (uzel != null) {
+                do {
+                    entry = new AbstractMap.SimpleEntry((K) uzel.getKey(), (V) uzel.getValue());
+                    resultSet.add(entry);
+                    uzel = uzel.getNext();
+                } while (uzel != null);
+            }
+        }
+
         return resultSet;
+    }
+
+    /**
+     *
+     */
+    public void showStructure() {
+        Uzel uzel;
+        for (int i = 0; i < kase.length; i++) {
+            System.out.print(i + ": ");
+            uzel = kase[i];
+            if (uzel != null) {
+                do {
+                    System.out.print("* ");
+                    uzel = uzel.getNext();
+                } while (uzel != null);
+            }
+            System.out.println("");
+        }
     }
 
     /**
@@ -252,13 +283,11 @@ public class Mips<K, V> implements Map<K, V> {
      * @param K key
      * @return index of basket
      */
-    private int getIndexBasket(Object K) {
+    public int getIndexBasket(Object K) {
         if (K == null) {
             return 0;
         }
         int h = K.hashCode();
-        h ^= (h >>> 20) ^ (h >>> 12);
-        h = h ^ (h >>> 7) ^ (h >>> 4);
 
         return (h & (capacity - 1));
     }

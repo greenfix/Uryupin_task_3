@@ -33,16 +33,33 @@ class MipsTest {
         assertEquals(map.get(null), mips.get(null));
         assertEquals(map.size(), mips.size());
 
+//       mips.showStructure();
+
         Double rand;
-        ;
-        for (int i = 2; i < 500; i++) {
+        int maxItems = 105;
+        for (Integer i = 2; i < maxItems; i++) {
             rand = Math.random();
             assertEquals(map.put(i, rand.toString()), mips.put(i, rand.toString()));
         }
+
+        // add collisions
+        assertEquals(map.put(272, "272+"), mips.put(272, "272+"));
+        assertEquals(map.put(273, "273+"), mips.put(273, "273+"));
+        assertEquals(map.put(274, "274+"), mips.put(274, "274+"));
+        assertEquals(map.put(275, "275+"), mips.put(275, "275+"));
+
         assertEquals(map.size(), mips.size());
-        for (int i = 2; i < 500; i++) {
+        for (int i = 2; i < maxItems; i++) {
             assertEquals(map.get(i), mips.get(i));
         }
+
+        // test collisions
+        assertEquals(map.get(272), mips.get(272));
+        assertEquals(map.get(273), mips.get(273));
+        assertEquals(map.get(274), mips.get(274));
+        assertEquals(map.get(275), mips.get(275));
+
+//        mips.showStructure();
     }
 
     @Test
@@ -121,11 +138,12 @@ class MipsTest {
 
     @Test
     void keySet() {
+        mips.put(3, "-3");
         assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
         assertEquals(map.put(0, null), mips.put(0, null));
         assertEquals(map.put(1, "-1"), mips.put(1, "-1"));
         assertEquals(map.put(2, "-2"), mips.put(2, "-2"));
-        assertEquals(map.put(3, "-3"), mips.put(3, "-3"));
+        map.put(3, "-3");
         assertEquals(map.put(4, "-4"), mips.put(4, "-4"));
         assertEquals(map.size(), mips.size());
         Set<Integer> mapKeys = map.keySet();
@@ -138,12 +156,13 @@ class MipsTest {
 
     @Test
     void values() {
+        mips.put(3, "-3");
         assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
         assertEquals(map.put(0, null), mips.put(0, null));
         assertEquals(map.put(1, "-1"), mips.put(1, "-1"));
         assertEquals(map.put(2, "-2"), mips.put(2, "-2"));
-        assertEquals(map.put(3, "-3"), mips.put(3, "-3"));
         assertEquals(map.put(4, "-4"), mips.put(4, "-4"));
+        map.put(3, "-3");
         assertEquals(map.size(), mips.size());
         Collection mapColl = map.values();
         Collection mipsColl = mips.values();
@@ -157,15 +176,21 @@ class MipsTest {
 
     @Test
     void entrySet() {
+        mips.put(3, "-3");
         assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
         assertEquals(map.put(0, null), mips.put(0, null));
         assertEquals(map.put(1, "-1"), mips.put(1, "-1"));
+        map.put(3, "-3");
         assertEquals(map.put(2, "-2"), mips.put(2, "-2"));
-        assertEquals(map.put(3, "-3"), mips.put(3, "-3"));
         assertEquals(map.put(4, "-4"), mips.put(4, "-4"));
         assertEquals(map.size(), mips.size());
-
-        System.out.println(map.entrySet());
-
+        Set mapEntries = map.entrySet();
+        Set mipsEntries = mips.entrySet();
+        assertEquals(mapEntries.size(), mipsEntries.size());
+        int mapLen = map.size();
+        mapEntries.retainAll(mipsEntries);
+        mipsEntries.retainAll(mapEntries);
+        assertEquals(mapEntries.size(), mipsEntries.size());
+        assertEquals(mapLen, mips.size());
     }
 }
