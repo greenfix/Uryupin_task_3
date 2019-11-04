@@ -16,6 +16,9 @@ class MipsTest {
 
     @Test
     void putGetRemove() {
+
+        // positive tests
+
         assertEquals(map.put(1, "1"), mips.put(1, "1"));
         assertEquals(map.get(1), mips.get(1));
         assertEquals(map.size(), mips.size());
@@ -59,6 +62,12 @@ class MipsTest {
         assertEquals(map.get(275), mips.get(275));
 
 //        mips.showStructure();
+
+        // negative tests
+
+        assertNotEquals(map.put(272, "1"), mips.put(273, "2"));
+        assertNotEquals(map.get(272), mips.get(273));
+
     }
 
     @Test
@@ -70,6 +79,12 @@ class MipsTest {
         assertEquals(map.remove(1), mips.remove(1));
         assertEquals(map.size(), mips.size());
         assertEquals(0, mips.size());
+
+        // negative tests
+
+        assertEquals(null, mips.put(100500, "1"));
+        assertNotEquals(map.size(), mips.size());
+
     }
 
     @Test
@@ -100,7 +115,7 @@ class MipsTest {
     @Test
     void containsValue() {
         assertEquals(map.containsValue(null), mips.containsValue(null));
-        assertEquals(map.containsValue(100500), mips.containsValue(10050));
+        assertEquals(map.containsValue("100500"), mips.containsValue("10050"));
         assertEquals(map.put(null, null), mips.put(null, null));
         assertEquals(map.containsValue(null), mips.containsValue(null));
         assertEquals(map.put(1, "null"), mips.put(1, "null"));
@@ -164,7 +179,7 @@ class MipsTest {
         map.put(3, "-3");
         assertEquals(map.size(), mips.size());
         Collection mapColl = map.values();
-        Collection mipsColl = mips.values();
+        Collection<? extends Object> mipsColl = mips.values();
         int beginSize = mipsColl.size();
         assertEquals(mapColl.size(), mipsColl.size());
         mapColl.retainAll(mipsColl);
@@ -183,8 +198,8 @@ class MipsTest {
         assertEquals(map.put(2, "-2"), mips.put(2, "-2"));
         assertEquals(map.put(4, "-4"), mips.put(4, "-4"));
         assertEquals(map.size(), mips.size());
-        Set mapEntries = map.entrySet();
-        Set mipsEntries = mips.entrySet();
+        Set<? extends Map.Entry<Integer, String>> mapEntries = map.entrySet();
+        Set<? extends Map.Entry<Integer, String>> mipsEntries = mips.entrySet();
         assertEquals(mapEntries.size(), mipsEntries.size());
         int mapLen = map.size();
         mapEntries.retainAll(mipsEntries);
