@@ -367,4 +367,47 @@ public class Mips<K, V> implements Map<K, V> {
                 (keyUzel != null && keyUzel.equals(K)));
     }
 
+    /**
+     *
+     * @param <K>
+     * @param <V>
+     */
+    public static class Uzel<K, V> {
+
+        private K key;
+        private V value;
+        private Uzel next;
+
+        public Uzel() {
+        }
+
+        public Uzel(K key, V value, Uzel next) {
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+
+        public Object getKey() {
+            return key;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public Uzel getNext() {
+            return next;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
+        }
+
+        public void setNext(Uzel next) {
+            this.next = next;
+        }
+
+    }
+
+
 }
