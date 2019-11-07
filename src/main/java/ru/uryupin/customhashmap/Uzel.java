@@ -1,5 +1,5 @@
 package ru.uryupin.customhashmap;
-
+// unused
 public class Uzel<K, V> {
 
     private K key;
