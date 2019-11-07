@@ -227,6 +227,49 @@ public class Mips<K, V> implements Map<K, V> {
         return resultSet;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+
+        if (!(o instanceof Mips))
+            return false;
+        Mips<?,?> m = (Mips<?,?>) o;
+        if (m.size() != size())
+            return false;
+
+        try {
+            Iterator<Entry<K,V>> i = entrySet().iterator();
+            while (i.hasNext()) {
+                Entry<K,V> e = i.next();
+                K key = e.getKey();
+                V value = e.getValue();
+                if (value == null) {
+                    if (!(m.get(key)==null && m.containsKey(key)))
+                        return false;
+                } else {
+                    if (!value.equals(m.get(key)))
+                        return false;
+                }
+            }
+        } catch (ClassCastException unused) {
+            return false;
+        } catch (NullPointerException unused) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int h = 0;
+        Iterator<Entry<K,V>> i = entrySet().iterator();
+        while (i.hasNext())
+            h += i.next().hashCode();
+        return h;
+    }
+
     /**
      *
      */
@@ -283,7 +326,7 @@ public class Mips<K, V> implements Map<K, V> {
      * @param K key
      * @return index of basket
      */
-    public int getIndexBasket(Object K) {
+    private int getIndexBasket(Object K) {
         if (K == null) {
             return 0;
         }
@@ -292,7 +335,7 @@ public class Mips<K, V> implements Map<K, V> {
         return (h & (capacity - 1));
     }
 
-    /**
+   /**
      *
      */
     private void expansionKase() {
@@ -323,4 +366,5 @@ public class Mips<K, V> implements Map<K, V> {
                 (K != null && K.equals(keyUzel)) ||
                 (keyUzel != null && keyUzel.equals(K)));
     }
+
 }

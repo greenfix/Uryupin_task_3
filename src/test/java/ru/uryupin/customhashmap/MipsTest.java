@@ -15,7 +15,7 @@ class MipsTest {
     private Map<Integer, String> map = new HashMap<>();
 
     @Test
-    void putGetRemove() {
+    void putGetRemoveTest() {
 
         // positive tests
 
@@ -71,7 +71,7 @@ class MipsTest {
     }
 
     @Test
-    void size() {
+    void sizeTest() {
         assertEquals(map.size(), mips.size());
         assertEquals(map.put(1, "1"), mips.put(1, "1"));
         assertEquals(map.size(), mips.size());
@@ -88,7 +88,7 @@ class MipsTest {
     }
 
     @Test
-    void isEmpty() {
+    void isEmptyTest() {
         assertEquals(map.isEmpty(), mips.isEmpty());
         assertEquals(true, mips.isEmpty());
         assertEquals(map.put(1, "1"), mips.put(1, "1"));
@@ -99,7 +99,7 @@ class MipsTest {
     }
 
     @Test
-    void containsKey() {
+    void containsKeyTest() {
         assertEquals(map.containsKey(null), mips.containsKey(null));
         assertEquals(false, mips.containsKey(null));
         assertEquals(map.containsKey(100500), mips.containsKey(100500));
@@ -123,7 +123,7 @@ class MipsTest {
     }
 
     @Test
-    void putAll() {
+    void putAllTest() {
         Map<Integer, String> scr = new HashMap<>();
         scr.put(1, "1");
         scr.put(2, "2");
@@ -140,7 +140,7 @@ class MipsTest {
     }
 
     @Test
-    void clear() {
+    void clearTest() {
         assertEquals(map.put(1, "1"), mips.put(1, "1"));
         assertEquals(map.get(1), mips.get(1));
         assertEquals(map.size(), mips.size());
@@ -151,7 +151,7 @@ class MipsTest {
     }
 
     @Test
-    void keySet() {
+    void keySetTest() {
         mips.put(3, "-3");
         assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
         assertEquals(map.put(0, null), mips.put(0, null));
@@ -169,7 +169,7 @@ class MipsTest {
     }
 
     @Test
-    void values() {
+    void valuesTest() {
         mips.put(3, "-3");
         assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
         assertEquals(map.put(0, null), mips.put(0, null));
@@ -189,7 +189,7 @@ class MipsTest {
     }
 
     @Test
-    void entrySet() {
+    void entrySetTest() {
         mips.put(3, "-3");
         assertEquals(map.put(null, "zero"), mips.put(null, "zero"));
         assertEquals(map.put(0, null), mips.put(0, null));
@@ -207,4 +207,34 @@ class MipsTest {
         assertEquals(mapEntries.size(), mipsEntries.size());
         assertEquals(mapLen, mips.size());
     }
+
+    @Test
+    void equalsTest() {
+
+        Map<Integer, String> mapOne = new HashMap<>();
+        Map<Integer, String> mapTwo = new HashMap<>();
+
+        mapOne.put(100, "hunter");
+        mapTwo.put(100, "hunter");
+
+        assertTrue(mapOne.equals(mapTwo));
+
+        Mips<Integer, String> mipsOne = new Mips<>();
+        Mips<Integer, String> mipsTwo = new Mips<>();
+
+        mipsOne.put(100, "hunter");
+        mipsOne.put(200, "200");
+        mipsOne.put(null, null);
+        mipsTwo.put(100, "hunter");
+        mipsTwo.put(200, "200");
+
+        assertFalse(mipsOne.equals(mipsTwo));
+
+        mipsTwo.put(null, null);
+
+        assertTrue(mipsOne.equals(mipsTwo));
+
+    }
+
+
 }
